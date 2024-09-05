@@ -45,14 +45,14 @@ const SwitchContainer = styled.div`
 `;
 
 const SwitchCircle = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   background-color: #6c5ecf;
   border-radius: 50%;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  left: ${(props) => (props.active ? "5px" : "calc(100% - 45px)")}; 
+  left: ${(props) => (props.active ? "10px" : "calc(100% - 42px)")}; 
   transition: left 0.3s ease;
 
   @media (max-width: 768px) {
@@ -74,7 +74,7 @@ const SwitchLabel = styled.span`
   font-weight: bold;
   color: #ffffff;
   position: absolute;
-  left: ${(props) => (props.active ? "calc(100% - 80px)" : "18px")}; 
+  left: ${(props) => (props.active ? "calc(100% - 85px)" : "18px")}; 
   transition: left 0.3s ease;
 
   @media (max-width: 768px) {

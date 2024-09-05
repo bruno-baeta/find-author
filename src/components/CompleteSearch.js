@@ -2,44 +2,82 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import SearchBox from "../components/SearchBox";
 import Switch from "../components/Switch";
+import SearchResultsList from "../components/SearchResultsList";
+import { fetchAuthors } from "../services/AuthorService";
 
 const CompleteSearch = () => {
-  const [searchResult, setSearchResult] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [results, setResults] = useState([]);
+  const [showResults, setShowResults] = useState(false);
 
-  const handleSearch = (term) => {
-    setSearchResult(`Resultados para: ${term}`);
+  const handleSearch = async (term) => {
+    setSearchTerm(term);
+
+    if (!term.trim()) {
+      setResults([]);
+      setShowResults(false); 
+      return;
+    }
+
+    const data = await fetchAuthors(term);
+    setResults(data);
+    setShowResults(data.length > 0);
   };
 
   return (
-    <PageContainer>
-      <SearchAndSwitchContainer>
-        <SearchBox onSearch={handleSearch} />
-        <Switch />
-      </SearchAndSwitchContainer>
-      <p>{searchResult}</p>
-    </PageContainer>
+    <>
+      {showResults && <Overlay />}
+      <SearchContainer>
+        <SearchAndSwitchContainer>
+          <SearchBox searchTerm={searchTerm} onSearch={handleSearch} />
+          <Switch />
+        </SearchAndSwitchContainer>
+
+        {showResults && results.length > 0 && (
+          <ResultsWrapper>
+            <SearchResultsList results={results} />
+          </ResultsWrapper>
+        )}
+      </SearchContainer>
+    </>
   );
 };
 
-// Estilos
-
-const PageContainer = styled.div`
-  background-color: ${(props) => props.theme.colors.background};
-  margin: 0;
-  padding: 0;
+const SearchContainer = styled.div`
+  position: relative;
+  z-index: 1001;
 `;
 
 const SearchAndSwitchContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 24px;
-  margin: 30px 20px 16px 40px;
+  margin: 30px 20px 10px 40px;
 
   @media (max-width: 768px) {
-    flex-direction: column; 
-    margin: 20px; 
-    gap: 16px; 
+    flex-direction: column;
+    margin: 20px;
+    gap: 16px;
   }
+`;
+
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1000; 
+`;
+
+const ResultsWrapper = styled.div`
+  position: absolute;
+  top: 80px;
+  left: 40px;
+  right: 50px;
+  max-width: calc(100% - 100px); 
+  z-index: 1001; 
 `;
 
 export default CompleteSearch;

@@ -2,31 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import ArticleItem from "./ArticleItem"; 
 
-const ArticleList = () => {
-    const articles = [
-        {
-            title: "Semi-Supervised Classification with Graph Convolutional Networks",
-            author: "Max Welling",
-            institution: "University of Amsterdam",
-        },
-        {
-            title: "Semi-Supervised Classification with Graph Convolutional Networks",
-            author: "Max Welling",
-            institution: "University of Amsterdam",
-        },
-        {
-            title: "Semi-Supervised Classification with Graph Convolutional Networks",
-            author: "Max Welling",
-            institution: "University of Amsterdam",
-        },
-        {
-            title: "Semi-Supervised Classification with Graph Convolutional Networks",
-            author: "Max Welling",
-            institution: "University of Amsterdam",
-        },
-        // Repetir ou adicionar mais objetos conforme necessário
-    ];
-
+const ArticleList = ({ articles }) => {
     return (
         <Container>
             <Header>
