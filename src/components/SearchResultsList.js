@@ -22,7 +22,7 @@ const ResultsContainer = styled.div`
   padding: 20px 0px 0px 20px;
   border-radius: 30px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  max-height: 300px;
+  max-height: 320px;
   overflow-y: auto;
   margin-top: 20px;
   display: flex;
