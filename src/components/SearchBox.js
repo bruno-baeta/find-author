@@ -25,8 +25,18 @@ const SearchBox = ({ searchTerm, onSearch }) => {
 };
 
 const SearchForm = styled.form`
-  margin: 30px 0px; 
-  width: calc(100% - 80px); 
+  margin: 30px 0px;
+  width: calc(100% - 80px);
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin: 20px 0;
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    margin: 10px 0;
+  }
 `;
 
 const SearchInputContainer = styled.div`
@@ -44,20 +54,33 @@ const SearchIcon = styled.img`
 `;
 
 const SearchInput = styled.input`
-  width: 100%; 
-  height: 50px; 
-  padding-left: 50px; 
-  padding-right: 50px; /* Mais espaço à direita para o botão "X" */
-  font-family: "Poppins", sans-serif; 
-  font-size: 16px; 
-  font-weight: 500; 
-  border-radius: 24px; 
-  border: none; 
-  outline: none; 
+  width: 100%;
+  height: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 24px;
+  border: none;
+  outline: none;
   background-color: #252836;
   color: #ffffff;
+
   &::placeholder {
-    color: #545454; 
+    color: #545454;
+  }
+
+  @media (max-width: 768px) {
+    height: 45px;
+    font-size: 14px;
+    padding-left: 50px;
+  }
+
+  @media (max-width: 480px) {
+    height: 40px;
+    font-size: 12px;
+    padding-left: 50px;
   }
 `;
 

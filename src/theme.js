@@ -4,6 +4,7 @@ const theme = {
         card: "#252836",
         primary: "#6C5ECF",
         text: "#FFFFFF",
+        gradient: "linear-gradient(180deg, #6C5ECF 0%, #6B8AEB 100%);",
     },
     fontSizes: {
         small: "12px",

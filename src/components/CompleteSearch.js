@@ -46,18 +46,34 @@ const CompleteSearch = () => {
 const SearchContainer = styled.div`
   position: relative;
   z-index: 1001;
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 10px;
+  }
 `;
 
 const SearchAndSwitchContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 24px;
-  margin: 30px 20px 10px 40px;
+  gap: 10px;
+  margin: 30px 40px 10px 40px;
 
   @media (max-width: 768px) {
-    flex-direction: column;
+    gap: 12px;
     margin: 20px;
-    gap: 16px;
+  }
+
+  @media (max-width: 480px) {
+    margin: 10px;
+    gap: 6px;
+    flex-direction: row; 
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0px 10px 0px;
   }
 `;
 
@@ -71,13 +87,32 @@ const Overlay = styled.div`
   z-index: 1000; 
 `;
 
+const SearchBoxWrapper = styled.div`
+  flex-grow: 1;
+  
+  @media (max-width: 480px) {
+    max-width: 70%;
+  }
+`;
+
 const ResultsWrapper = styled.div`
   position: absolute;
   top: 80px;
   left: 40px;
   right: 50px;
-  max-width: calc(100% - 100px); 
-  z-index: 1001; 
+  z-index: 1001;
+
+  @media (max-width: 768px) {
+    left: 20px;
+    right: 20px;
+    top: 70px;
+  }
+
+  @media (max-width: 480px) {
+    left: 10px;
+    right: 10px;
+    top: 60px;
+  }
 `;
 
 export default CompleteSearch;

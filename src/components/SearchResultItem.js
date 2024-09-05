@@ -24,7 +24,7 @@ const SearchResultItem = ({ name, publications, citations, onItemClick, onPublic
 const ItemContainer = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${(props) => props.theme.colors.background};
+  background-color: ${(props) => props.theme.colors.card};
   padding: 15px 6px 15px 0px;
   height: 40px; 
   border-radius: 30px;
@@ -33,13 +33,17 @@ const ItemContainer = styled.div`
   cursor: pointer; 
   
   &:hover {
-    background-color: #A17CFF;
+    background-color: ${(props) => props.theme.colors.background};
     color: #FFFFFF;
     
     button {
       background: #FFFFFF; 
       color: #6C5ECF;
     }
+  }
+
+  @media (max-width: 480px) {
+    height: 50px;
   }
 `;
 
@@ -68,6 +72,10 @@ const Stats = styled.div`
   display: flex;
   gap: 10px;
   align-items: center;
+
+  @media (max-width: 480px) {
+    display: none; 
+  }
 `;
 
 const StatButton = styled.button`
