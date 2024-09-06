@@ -1,10 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; 
 import styled from "styled-components";
 import profileIcon from "../assets/ic_search_list_icon.svg";
 
-const SearchResultItem = ({ name, publications, citations, onItemClick, onPublicationClick, onCitationClick }) => {
+const SearchResultItem = ({ name, publications, citations, onPublicationClick, onCitationClick, authorId }) => {
+  const navigate = useNavigate();
+
+  const handleItemClick = () => {
+    navigate(`/author/${authorId}`); 
+  };
+
   return (
-    <ItemContainer onClick={onItemClick}>
+    <ItemContainer onClick={handleItemClick}>
       <ProfileImage src={profileIcon} alt="Profile" />
       <Details>
         <Name>{name}</Name>

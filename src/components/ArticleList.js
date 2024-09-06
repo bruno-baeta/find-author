@@ -22,6 +22,7 @@ const ArticleList = ({ label, articles }) => {
             citedByCount={articleData.citedByCount}
             concepts={articleData.concepts}
             doi={articleData.doi}
+            authorId={articleData.author.id}
             />
           );
         })}
@@ -43,7 +44,7 @@ const mapArticleData = (article) => {
     title: article.display_name || article.title,
     author: {
       name: authorName,
-      link: authorLink,
+      id: authorLink.match(/\/([^\/]+)$/)[1],
     },
     institution,
     year: article.publication_year,

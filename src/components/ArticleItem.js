@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; 
 import styled from "styled-components";
 import articleIcon from "../assets/ic_article_icon.svg";
 
-const ArticleItem = ({ title, author, institution, year, citedByCount, concepts, doi, openAccess }) => {
+const ArticleItem = ({ title, author, institution, year, citedByCount, concepts, doi, authorId }) => {
   const [isMobile, setIsMobile] = useState(false);
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const handleResize = () => {
@@ -17,6 +19,10 @@ const ArticleItem = ({ title, author, institution, year, citedByCount, concepts,
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const handleAuthorClick = () => {
+    navigate(`/author/${authorId}`); 
+  };
 
   return (
     <ArticleCard>
@@ -50,7 +56,7 @@ const ArticleItem = ({ title, author, institution, year, citedByCount, concepts,
         </ArticleDetails>
         <ActionContainer>
           <ActionButton onClick={() => window.open(doi, "_blank")}>Acessar Artigo</ActionButton>
-          <ActionButton onClick={() => window.open(author.link, "_blank")}>Acessar Autor</ActionButton>
+          <ActionButton onClick={handleAuthorClick}>Acessar Autor</ActionButton> {/* Altere aqui para usar a função de navegação */}
         </ActionContainer>
       </ArticleContent>
     </ArticleCard>

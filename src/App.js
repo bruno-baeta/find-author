@@ -1,7 +1,9 @@
 import React from "react";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
+import { Routes, Route } from 'react-router-dom';
 import theme from "./theme";
 import HomePage from "./pages/HomePage";
+import AuthorPage from "./pages/AuthorPage";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -29,7 +31,10 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <HomePage />
+      <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/author/:authorId" element={<AuthorPage />} />
+    </Routes>
     </ThemeProvider>
   );
 };

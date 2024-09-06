@@ -11,6 +11,7 @@ const SearchResultsList = ({ results }) => {
           name={result.display_name}
           publications={result.works_count}
           citations={result.cited_by_count}
+          authorId={result.id.match(/\/([^\/]+)$/)[1]}
         />
       ))}
     </ResultsContainer>
