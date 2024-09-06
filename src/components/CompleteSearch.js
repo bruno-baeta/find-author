@@ -5,35 +5,55 @@ import Switch from "../components/Switch";
 import SearchResultsList from "../components/SearchResultsList";
 import { fetchAuthors } from "../services/AuthorService";
 
-const CompleteSearch = () => {
+const CompleteSearch = ({ onArticlesSearch, clearLabel }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
+  const [isArticleSearch, setIsArticleSearch] = useState(false);
 
   const handleSearch = async (term) => {
     setSearchTerm(term);
 
     if (!term.trim()) {
       setResults([]);
-      setShowResults(false); 
+      setShowResults(false);
       return;
     }
 
-    const data = await fetchAuthors(term);
-    setResults(data);
-    setShowResults(data.length > 0);
+    if (isArticleSearch) {
+      onArticlesSearch(term);
+      clearLabel(); 
+    } else {
+      const data = await fetchAuthors(term);
+      setResults(data); 
+      setShowResults(data.length > 0);
+    }
+  };
+
+  const handleSwitchChange = () => {
+    setIsArticleSearch(!isArticleSearch); 
+    setSearchTerm(""); 
+    setResults([]); 
+    setShowResults(false);
+    if (!isArticleSearch) {
+      clearLabel(); 
+    }
   };
 
   return (
     <>
-      {showResults && <Overlay />}
+      {showResults && !isArticleSearch && <Overlay />}
       <SearchContainer>
         <SearchAndSwitchContainer>
-          <SearchBox searchTerm={searchTerm} onSearch={handleSearch} />
-          <Switch />
+          <SearchBox
+            searchTerm={searchTerm}
+            onSearch={handleSearch}
+            placeholder={isArticleSearch ? "Procure por tópicos..." : "Procure por autores..."}
+          />
+          <Switch isActive={isArticleSearch} onToggle={handleSwitchChange} />
         </SearchAndSwitchContainer>
 
-        {showResults && results.length > 0 && (
+        {!isArticleSearch && showResults && results.length > 0 && (
           <ResultsWrapper>
             <SearchResultsList results={results} />
           </ResultsWrapper>
@@ -70,7 +90,7 @@ const SearchAndSwitchContainer = styled.div`
   @media (max-width: 480px) {
     margin: 10px;
     gap: 6px;
-    flex-direction: row; 
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     margin: 10px 0px 10px 0px;
@@ -84,15 +104,7 @@ const Overlay = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
-  z-index: 1000; 
-`;
-
-const SearchBoxWrapper = styled.div`
-  flex-grow: 1;
-  
-  @media (max-width: 480px) {
-    max-width: 70%;
-  }
+  z-index: 1000;
 `;
 
 const ResultsWrapper = styled.div`

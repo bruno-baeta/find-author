@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-const LabelSelector = ({ onSelect }) => {
+const LabelSelector = ({ onSelect, selectedLabel, clearSelection }) => {
   const labels = [
-    "Deep Learning", "Quantum Computing", "Neurobiology", "Microbiology", "Data Science",
-    "Biotechnology", "Antropologia Cultural", "Econometrics", "Comunicação Digital",
-    "Educação Inclusiva", "Filosofia Política", "Chemistry"
+    "Deep Learning", "Quantum Computing", "Neurobiologia", "Microbiologia", "Data Science",
+    "Biotecnologia", "Antropologia Cultural", "Econometria", "Comunicação Digital",
+    "Educação Inclusiva", "Filosofia Política", "Química"
   ];
 
-  const [selectedLabel, setSelectedLabel] = useState(labels[0]);
+  const [currentLabel, setCurrentLabel] = useState(selectedLabel || labels[0]);
 
   const getVisibleLabels = () => {
     if (window.innerWidth < 768) {
@@ -19,17 +19,26 @@ const LabelSelector = ({ onSelect }) => {
 
   const [visibleLabels, setVisibleLabels] = useState(getVisibleLabels());
 
-  window.addEventListener("resize", () => setVisibleLabels(getVisibleLabels()));
+  useEffect(() => {
+    window.addEventListener("resize", () => setVisibleLabels(getVisibleLabels()));
+    return () => window.removeEventListener("resize", () => setVisibleLabels(getVisibleLabels()));
+  }, []);
+
+  useEffect(() => {
+    if (clearSelection) {
+      setCurrentLabel(null);
+    }
+  }, [clearSelection]);
 
   return (
     <LabelContainer>
       {visibleLabels.map((label) => (
         <Label
           key={label}
-          isSelected={label === selectedLabel}
+          isSelected={label === currentLabel}
           onClick={() => {
             onSelect(label);
-            setSelectedLabel(label);
+            setCurrentLabel(label);
           }}
         >
           {label}

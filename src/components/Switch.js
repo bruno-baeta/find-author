@@ -1,17 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
-const Switch = () => {
-  const [active, setActive] = useState(true); 
+const Switch = ({ isActive, onToggle }) => {
 
   const toggleSwitch = () => {
-    setActive(!active); 
+    onToggle(!isActive); 
   };
 
   return (
-    <SwitchContainer onClick={toggleSwitch} active={active}>
-      <SwitchLabel active={active}>{active ? "Autores" : "Tópicos"}</SwitchLabel>
-      <SwitchCircle active={active} />
+    <SwitchContainer onClick={toggleSwitch} active={isActive}>
+      <SwitchLabel active={isActive}>{isActive ? "Tópicos" : "Autores"}</SwitchLabel>
+      <SwitchCircle active={isActive} />
     </SwitchContainer>
   );
 };

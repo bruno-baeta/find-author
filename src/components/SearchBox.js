@@ -3,14 +3,14 @@ import styled from "styled-components";
 import searchIcon from "../assets/ic_search_icon.svg";
 import closeIcon from "../assets/ic_close_search.svg"; 
 
-const SearchBox = ({ searchTerm, onSearch }) => {
+const SearchBox = ({ searchTerm, onSearch, placeholder }) => {
   return (
     <SearchForm onSubmit={(e) => e.preventDefault()}>
       <SearchInputContainer>
         <SearchIcon src={searchIcon} alt="Search" />
         <SearchInput
           type="text"
-          placeholder="Procure por autores..."
+          placeholder={placeholder}
           value={searchTerm}
           onChange={(e) => onSearch(e.target.value)}
         />

@@ -7,33 +7,41 @@ import ArticleList from "../components/ArticleList";
 import { fetchHomeWorks } from "../services/TopicService";
 
 const HomePage = () => {
-  const [label, setLabel] = useState();
-  const [results, setResults] = useState([]); 
-  const [showResults, setShowResults] = useState(false); 
-  const [initialLabel, setInitialLabel] = useState("Deep Learning"); 
-  
-  const handleLabel = async (label) => {
-    if (!label.trim()) {
-      setResults([]);
-      setShowResults(false); 
-      return;
-    }
-
-    const data = await fetchHomeWorks(label); 
-    setResults(data);
-    setLabel(label)
-    setShowResults(data.length > 0);
-  };
+  const [label, setLabel] = useState("Deep Learning");
+  const [results, setResults] = useState([]);
+  const [showResults, setShowResults] = useState(false);
+  const [clearSelection, setClearSelection] = useState(false); 
 
   useEffect(() => {
-    handleLabel(initialLabel);
-  }, [initialLabel]);
+    const loadInitialArticles = async () => {
+      const data = await fetchHomeWorks(label);
+      setResults(data);
+      setShowResults(data.length > 0);
+    };
+    loadInitialArticles();
+  }, [label]);
+
+  const handleLabel = async (newLabel) => {
+    setClearSelection(false);
+    const data = await fetchHomeWorks(newLabel);
+    setResults(data); 
+    setLabel(newLabel); 
+    setShowResults(data.length > 0); 
+  };
+
+  const handleArticlesSearch = async (searchTerm) => {
+    const data = await fetchHomeWorks(searchTerm);
+    setResults(data);
+    setLabel(searchTerm);
+    setShowResults(true);
+    setClearSelection(true);
+  };
 
   return (
     <PageContainer>
       <Header />
-      <CompleteSearch />
-      <LabelSelector onSelect={handleLabel} /> 
+      <CompleteSearch onArticlesSearch={handleArticlesSearch} clearLabel={() => setClearSelection(true)} />
+      <LabelSelector onSelect={handleLabel} clearSelection={clearSelection} selectedLabel={label} />
       {showResults && <ArticleList label={label} articles={results} />}
     </PageContainer>
   );
@@ -46,6 +54,5 @@ const PageContainer = styled.div`
   padding: 0;
   position: relative;
 `;
-
 
 export default HomePage;
