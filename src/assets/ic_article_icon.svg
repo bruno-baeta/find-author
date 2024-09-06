@@ -1,8 +1,8 @@
-<svg width="45" height="30" viewBox="0 0 45 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<rect width="45" height="30" fill="url(#pattern0_116_369)"/>
+<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<rect width="30" height="30" fill="url(#pattern0_116_369)"/>
 <defs>
 <pattern id="pattern0_116_369" patternContentUnits="objectBoundingBox" width="1" height="1">
-<use xlink:href="#image0_116_369" transform="matrix(0.00666667 0 0 0.01 0.166667 0)"/>
+<use xlink:href="#image0_116_369" transform="scale(0.01)"/>
 </pattern>
 <image id="image0_116_369" width="100" height="100" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAADbUlEQVR4nO3dO2sUURQH8CsBS1+Fgo0gKqjfwbeCYicDIdl71gcEs+duxMoy9oqfQLF2ffQ2VoIRnHvWNfgBxMYuKvhYi5Wb9QUmsiS45z7+fzj9zP+3M3d2ZicxBkEQBEEQBEkkVy8tbmtbf9hZqWKZlvVn5iZ7O0xJYdvdx+QfMsk3RzKIbZj8Vya5ZkpIm+QUW/9Bu3Q3yli5YbI/MlLBoAJQnPWP1AsmoPxawGNdM9wIw9bfMjmlTXJUu1QHlN/hZn0u8iPgsSO/UMyasnydH0HxbvXpzMy82MxWnhVx+koBxBhjikFJBaQYlJRAikBJDSR7lBRBskZJFSRblJRBskRJHSQ7lBxAskLJBSQblJxAskDJDSR5lBxBkkbJFSRZlJxBfqKM8jwlml+zxA7C1j9d7z6OgsLWf7nc6G432okehORTa6retd79HO1I8aeNdmIHccNP7/OxoFipjHZSAHHDsj6H01dYU9Yzw2f0ABkkgo4jxGkjAET0iweI6JcNENEvGCCiXypAIiiSAKJfHgFEvzACiH5JBBD9Yggg+mVQBINbJ6KPABDRLx4gol82QES/4NJAmPyd9rQ/UFWdCe39qKrORNgWJn+3SBAmuW0iDa8VJWWQWVvvN5GmRXKwOJD29MImE2lmln/MUBiIs/6EiTTc8CdLBOldacoWE1lmp3pbmfyr8kCGKG/ZynVu1JPaf3GOG/Vk2JawTWvfn9RBchsLkIE6AkBEv3iAiH7ZABH9ggEi+qUWDWL9G0d+fqyXvU0/x9Y/Acjfn6aX4RaFzsdosIFJbuII+QOk1ayPG8XMV4sbHfl3OGVFdHOR//XyTWlrSHgYpL7tJK8B8gMkPATSxGDbPYs1ZAWU8DBonI9w+WK9k23dduQ/AkT7ewLhe4h+SQQQ/WIIIPplUAST8mVvlmMBMlBHAIjoFw8Q0S8bIKJfMEBEv1SARFAkAUS/PAKIfmEEEP2SCCD6xRBA9MugCCaGWyex/2NJN8YJXWh7GG7KEe0iXCTTovqQtocJL904K33tMpz2WOmHl31MDHFWHqgXQtog/p6JJXPn/V4meV/w0bE0e6G328SU8BJnkShWllyje8zEmFaj3sNW7hexpljph9NUdEfGSgmLW7ji0H6R0/2nCfsW4xvECIIgCIIgiFkl3wHaelwzgVrroAAAAABJRU5ErkJggg=="/>
 </defs>

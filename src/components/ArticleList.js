@@ -119,7 +119,7 @@ const ArticleContainer = styled.div`
   }
 
   @media (max-width: 480px) {
-    gap: 4px;
+    gap: 6px;
   }
 `;
 

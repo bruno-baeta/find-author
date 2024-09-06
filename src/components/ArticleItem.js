@@ -99,8 +99,12 @@ const ImageContainer = styled.div`
 `;
 
 const ArticleImage = styled.img`
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
+
+  @media (max-width: 480px) {
+    margin-left: -7px;
+  }
 `;
 
 const ArticleDetails = styled.div`
