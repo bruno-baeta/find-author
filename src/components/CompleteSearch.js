@@ -5,7 +5,7 @@ import Switch from "../components/Switch";
 import SearchResultsList from "../components/SearchResultsList";
 import { fetchAuthors } from "../services/AuthorService";
 
-const CompleteSearch = ({ onArticlesSearch, clearLabel }) => {
+const CompleteSearch = ({ onArticlesSearch, clearLabel, showSwitch = true }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
@@ -22,21 +22,21 @@ const CompleteSearch = ({ onArticlesSearch, clearLabel }) => {
 
     if (isArticleSearch) {
       onArticlesSearch(term);
-      clearLabel(); 
+      clearLabel();
     } else {
       const data = await fetchAuthors(term);
-      setResults(data); 
+      setResults(data);
       setShowResults(data.length > 0);
     }
   };
 
   const handleSwitchChange = () => {
-    setIsArticleSearch(!isArticleSearch); 
-    setSearchTerm(""); 
-    setResults([]); 
+    setIsArticleSearch(!isArticleSearch);
+    setSearchTerm("");
+    setResults([]);
     setShowResults(false);
     if (!isArticleSearch) {
-      clearLabel(); 
+      clearLabel();
     }
   };
 
@@ -44,13 +44,15 @@ const CompleteSearch = ({ onArticlesSearch, clearLabel }) => {
     <>
       {showResults && !isArticleSearch && <Overlay />}
       <SearchContainer>
-        <SearchAndSwitchContainer>
+        <SearchAndSwitchContainer showSwitch={showSwitch}>
           <SearchBox
             searchTerm={searchTerm}
             onSearch={handleSearch}
             placeholder={isArticleSearch ? "Procure por tópicos..." : "Procure por autores..."}
           />
-          <Switch isActive={isArticleSearch} onToggle={handleSwitchChange} />
+          {showSwitch && (
+            <Switch isActive={isArticleSearch} onToggle={handleSwitchChange} />
+          )}
         </SearchAndSwitchContainer>
 
         {!isArticleSearch && showResults && results.length > 0 && (
@@ -68,7 +70,7 @@ const SearchContainer = styled.div`
   z-index: 1001;
 
   @media (max-width: 768px) {
-    padding: 0 20px;
+    padding: 0px 20px;
   }
 
   @media (max-width: 480px) {
@@ -80,7 +82,15 @@ const SearchAndSwitchContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 30px 40px 10px 40px;
+  margin: 8px 40px 0px 40px;
+
+  ${({ showSwitch }) => !showSwitch && `
+    gap: 0;
+    flex-direction: column;
+    & > * {
+      width: 100%;
+    }
+  `}
 
   @media (max-width: 768px) {
     gap: 12px;

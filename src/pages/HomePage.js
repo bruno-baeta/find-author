@@ -10,7 +10,7 @@ const HomePage = () => {
   const [label, setLabel] = useState("Deep Learning");
   const [results, setResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
-  const [clearSelection, setClearSelection] = useState(false); 
+  const [clearSelection, setClearSelection] = useState(false);
 
   useEffect(() => {
     const loadInitialArticles = async () => {
@@ -24,9 +24,9 @@ const HomePage = () => {
   const handleLabel = async (newLabel) => {
     setClearSelection(false);
     const data = await fetchHomeWorks(newLabel);
-    setResults(data); 
-    setLabel(newLabel); 
-    setShowResults(data.length > 0); 
+    setResults(data);
+    setLabel(newLabel);
+    setShowResults(data.length > 0);
   };
 
   const handleArticlesSearch = async (searchTerm) => {
@@ -40,8 +40,14 @@ const HomePage = () => {
   return (
     <PageContainer>
       <Header />
-      <CompleteSearch onArticlesSearch={handleArticlesSearch} clearLabel={() => setClearSelection(true)} />
-      <LabelSelector onSelect={handleLabel} clearSelection={clearSelection} selectedLabel={label} />
+      <CompleteSearch
+        onArticlesSearch={handleArticlesSearch}
+        clearLabel={() => setClearSelection(true)}
+        showSwitch={true} />
+      <LabelSelector
+        onSelect={handleLabel}
+        clearSelection={clearSelection}
+        selectedLabel={label} />
       {showResults && <ArticleList label={label} articles={results} />}
     </PageContainer>
   );
