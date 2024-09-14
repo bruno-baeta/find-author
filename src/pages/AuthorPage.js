@@ -76,19 +76,19 @@ const AuthorPage = () => {
   const institutions = [
     { type: 'company', text: 'Google (United States)', value: 'Presente' },
     { type: 'company', text: 'DeepMind (United Kingdom)', value: '2020' },
-    { type: 'education', text: 'University of Amsterdam', value: '2016-2020' }
+    { type: 'education', text: 'University of Amsterdam', value: '2016-2020' },
   ];
 
   const topics = [
     { type: '', text: 'Graph Neural Network Models and Applications', value: '7 Artigos' },
     { type: '', text: 'Advances in Transfer Learning and Domain Adaptation', value: '5 Artigos' },
-    { type: '', text: 'Stereo Vision and Depth Estimation', value: '3 Artigos' }
+    { type: '', text: 'Stereo Vision and Depth Estimation', value: '3 Artigos' },
   ];
 
   const collaborators = [
     { icon: ic_collaborator, title: 'Max Welling', description: 'University of Amsterdam', collaborations: 10, value: 'Acessar Dados', type: 'button' },
     { icon: ic_collaborator, title: 'Peter Bloem', description: 'Vrije Universiteit Amsterdam', collaborations: 7, value: 'Acessar Dados', type: 'button' },
-    { icon: ic_collaborator, title: 'Rianne van den Berg', description: 'University of Amsterdam', collaborations: 5, value: 'Acessar Dados', type: 'button' }
+    { icon: ic_collaborator, title: 'Rianne van den Berg', description: 'University of Amsterdam', collaborations: 5, value: 'Acessar Dados', type: 'button' },
   ];
 
   const metrics = [

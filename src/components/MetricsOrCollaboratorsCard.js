@@ -39,8 +39,8 @@ const CardContainer = styled.div`
   border-radius: 24px;
   flex: 1;
   display: flex;
-  max-height: 380px; 
-  min-height: 380px; 
+  max-height: 382px; 
+  min-height: 382px; 
   flex-direction: column;
   overflow-y: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

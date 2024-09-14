@@ -93,7 +93,7 @@ const Subtitle = styled.h3`
 const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 8px;
 `;
 
 const ListItem = styled.div`
