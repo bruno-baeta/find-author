@@ -3,8 +3,24 @@ import Header from '../components/Header';
 import CompleteSearch from '../components/CompleteSearch';
 import ChartCard from '../components/ChartCard';
 import styled from 'styled-components';
+import InfoListCard from '../components/InfoListCard';
 
 const ChartsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0px 40px; 
+  width: 100%;
+  margin-bottom: 22px;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 20px; 
+  }
+`;
+
+const ContainerInfoListCard = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 20px;
@@ -14,7 +30,7 @@ const ChartsContainer = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 20px;
-    padding: 0 20px; 
+    padding: 0 20px;
   }
 `;
 
@@ -39,6 +55,18 @@ const AuthorName = styled.h1`
 const AuthorPage = () => {
   const handleArticlesSearch = async (searchTerm) => { };
   const authorName = "Thomas Kipf";
+
+  const institutions = [
+    { type: 'company', text: 'Google (United States)', value: 'Presente' },
+    { type: 'company', text: 'DeepMind (United Kingdom)', value: '2020' },
+    { type: 'education', text: 'University of Amsterdam', value: '2016–2020' },
+  ];
+
+  const topics = [
+    { type: '', text: 'Graph Neural Network Models and Applications', value: '7 Artigos' },
+    { type: '', text: 'Advances in Transfer Learning and Domain Adaptation', value: '5 Artigos' },
+    { type: '', text: 'Stereo Vision and Depth Estimation', value: '3 Artigos' }
+  ];
 
   return (
     <div>
@@ -67,6 +95,18 @@ const AuthorPage = () => {
           />
         </ChartWrapper>
       </ChartsContainer>
+      <ContainerInfoListCard>
+        <InfoListCard
+          title="Instituições"
+          subtitle="8 instituições"
+          data={institutions}
+        />
+        <InfoListCard
+          title="Tópicos Abordados"
+          subtitle="4 tópicos"
+          data={topics}
+        />
+      </ContainerInfoListCard>
     </div>
   );
 };

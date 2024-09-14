@@ -51,7 +51,7 @@ const ChartCanvas = styled.div`
   canvas {
     width: 100%;
     height: auto;
-    max-height: 460px; 
+    max-height: 380px; 
   }
 
   @media (max-width: 1600px) {
