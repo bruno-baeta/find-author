@@ -39,8 +39,7 @@ const CardContainer = styled.div`
   border-radius: 24px;
   flex: 1;
   display: flex;
-  max-height: 382px; 
-  min-height: 382px; 
+  max-height: 382px;
   flex-direction: column;
   overflow-y: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -95,14 +94,14 @@ const ListContainer = styled.div`
 const ItemCard = styled.div`
   background-color: ${({ theme }) => theme.colors.card};
   border: 1px solid ${({ theme }) => theme.colors.primary};
-  border-radius: 32px; 
+  border-radius: 32px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 8px;  
-  width: calc(33.33% - 20px); 
-  max-width: 220px; 
+  padding: 10px 8px;
+  width: calc(33.33% - 20px);
+  max-width: 220px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 768px) {
@@ -152,9 +151,12 @@ const CollaboratorInfo = styled.p`
   color: ${({ theme }) => theme.colors.text};
   margin-bottom: 5px;
   max-width: 100%;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  word-wrap: break-word;
 `;
 
 const BottomContent = styled.div`
