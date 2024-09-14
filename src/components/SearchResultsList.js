@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import SearchResultItem from "./SearchResultItem";
 
 const SearchResultsList = ({ results }) => {
+  const [hasScrollbar, setHasScrollbar] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const checkForScrollbar = () => {
+      if (containerRef.current) {
+        const hasOverflow =
+          containerRef.current.scrollHeight > containerRef.current.clientHeight;
+        setHasScrollbar(hasOverflow);
+      }
+    };
+
+    checkForScrollbar();
+
+    window.addEventListener("resize", checkForScrollbar);
+
+    return () => {
+      window.removeEventListener("resize", checkForScrollbar);
+    };
+  }, [results]);
+
   return (
-    <ResultsContainer>
+    <ResultsContainer ref={containerRef} hasScrollbar={hasScrollbar}>
       {results.map((result, index) => (
         <SearchResultItem
           key={index}
@@ -20,8 +41,9 @@ const SearchResultsList = ({ results }) => {
 
 const ResultsContainer = styled.div`
   background-color: ${(props) => props.theme.colors.card};
-  padding: 20px 0px 20px 20px;
-  width:100%;
+  padding: ${(props) =>
+    props.hasScrollbar ? "20px 0px 20px 20px" : "20px"};
+  width: 100%;
   border-radius: 30px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   max-height: 320px;

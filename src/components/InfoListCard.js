@@ -45,22 +45,19 @@ const CardContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 480px;
+  max-height: 370px; 
+  min-height: 370px; 
   overflow-y: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
   margin-bottom: 22px;
 
-  @media (max-width: 1600px) {
-    max-height: 400px;
-  }
-
   &::-webkit-scrollbar {
-    width: 44px;
+    width: 25px;
   }
   
   &::-webkit-scrollbar-thumb {
-    height: 1em;
-    border: 1em solid rgba(0, 0, 0, 0);
+    height: 0.6em;
+    border: 0.5em solid rgba(0, 0, 0, 0);
     background-clip: padding-box;
     border-radius: 2em;
     background-color: ${({ theme }) => theme.colors.primary};
@@ -78,25 +75,25 @@ const CardContainer = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 18px;
+  color: ${(props) => props.theme.colors.text};
+  font-size: 16px;
   font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.text}; 
-  margin-bottom: 10px;
+  font-weight: 500;
+  margin-bottom: 16px;
 `;
 
 const Subtitle = styled.h3`
+  color: ${(props) => props.theme.colors.text};
   font-size: 32px;
   font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.text}; 
-  margin-bottom: 20px;
+  font-weight: 500;
+  margin-bottom: 24px;
 `;
 
 const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 22px;
 `;
 
 const ListItem = styled.div`

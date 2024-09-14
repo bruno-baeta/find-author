@@ -10,8 +10,28 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: #252836;
     outline: none;
+
+    &::-webkit-scrollbar {
+      width: 12px;
+    }
+      
+    &::-webkit-scrollbar-thumb {
+      background-clip: padding-box;
+      border-radius: 2em;
+      background-color: #6C5ECF;
+    }
+
+    &::-webkit-scrollbar-button {
+      width: 0;
+      height: 0;
+      display: none;
+    }
+
+    &::-webkit-scrollbar-corner {
+      background-color: #252836;
+    }
   }
 
   body, html {
@@ -32,9 +52,9 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/author/:authorId" element={<AuthorPage />} />
-    </Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/author/:authorId" element={<AuthorPage />} />
+      </Routes>
     </ThemeProvider>
   );
 };
