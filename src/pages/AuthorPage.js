@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
-import CompleteSearch from '../components/CompleteSearch';
 import ChartCard from '../components/ChartCard';
 import styled from 'styled-components';
 import InfoListCard from '../components/InfoListCard';
@@ -9,6 +9,11 @@ import ic_hindex from '../assets/ic_hindex.svg';
 import ic_article from '../assets/ic_article_icon.svg';
 import MetricsOrCollaboratorsCard from '../components/MetricsOrCollaboratorsCard';
 import RelevantArticlesList from '../components/RelevantArticlesList';
+import CompleteSearch from '../components/CompleteSearch';
+import { fetchAuthor } from '../services/AuthorService';
+import { fetchAuthorWorks } from '../services/WorksService';
+
+// Seus estilos já existentes
 
 const ChartsContainer = styled.div`
   display: flex;
@@ -86,60 +91,98 @@ const AuthorName = styled.h1`
 `;
 
 const AuthorPage = () => {
-  const handleArticlesSearch = async (searchTerm) => { };
-  const authorName = "Thomas Kipf";
+  const { authorId } = useParams();
+  const [authorData, setAuthorData] = useState(null);
+  const [collaborators, setCollaborators] = useState([]);
+  const [relevantArticles, setRelevantArticles] = useState([]);
 
-  const institutions = [
-    { type: 'company', text: 'Google (United States)', value: 'Presente' },
-    { type: 'company', text: 'DeepMind (United Kingdom)', value: '2020' },
-    { type: 'education', text: 'University of Amsterdam', value: '2016-2020' },
-  ];
+  useEffect(() => {
+    const loadAuthorData = async () => {
+      const data = await fetchAuthor(authorId);
+      setAuthorData(data);
+    };
 
-  const topics = [
-    { type: '', text: 'Graph Neural Network Models and Applications', value: '7 Artigos' },
-    { type: '', text: 'Advances in Transfer Learning and Domain Adaptation', value: '5 Artigos' },
-    { type: '', text: 'Stereo Vision and Depth Estimation', value: '3 Artigos' },
-  ];
+    const loadAuthorWorks = async () => {
+      const works = await fetchAuthorWorks(authorId);
+      processCollaboratorsAndArticles(works);
+    };
 
-  const collaborators = [
-    { icon: ic_collaborator, title: 'Max Welling', description: 'University of Amsterdam', collaborations: 10, value: 'Acessar Dados', type: 'button' },
-    { icon: ic_collaborator, title: 'Peter Bloem', description: 'Vrije Universiteit Amsterdam', collaborations: 7, value: 'Acessar Dados', type: 'button' },
-    { icon: ic_collaborator, title: 'Rianne van den Berg', description: 'University of Amsterdam', collaborations: 5, value: 'Acessar Dados', type: 'button' },
-  ];
+    loadAuthorData();
+    loadAuthorWorks();
+  }, [authorId]);
+
+  const processCollaboratorsAndArticles = (works) => {
+    const collaboratorsMap = new Map();
+    const articles = [];
+
+    works.forEach(work => {
+      work.authorships.forEach(authorship => {
+        const collaboratorId = authorship.author.id.replace('https://openalex.org/', '');
+        const collaboratorName = authorship.author.display_name;
+
+        if (collaboratorId !== authorId) { // Evita o próprio autor
+          const institution = authorship.institutions?.[0]?.display_name || 'Instituição não encontrada';
+
+          collaboratorsMap.set(collaboratorId, {
+            id: collaboratorId,
+            name: collaboratorName,
+            institution,
+            count: (collaboratorsMap.get(collaboratorId)?.count || 0) + 1,
+          });
+        }
+      });
+
+      articles.push({
+        title: work.title,
+        citations: work.cited_by_count,
+        year: work.publication_year,
+        icon: ic_article,
+      });
+    });
+
+    setCollaborators([...collaboratorsMap.values()].sort((a, b) => b.count - a.count));
+    setRelevantArticles(articles.sort((a, b) => b.citations - a.citations).slice(0, 5));
+  };
+
+  if (!authorData) {
+    return null;
+  }
+
+  const authorName = authorData.display_name;
+  const institutions = authorData.affiliations.map((affiliation) => ({
+    type: affiliation.institution.type,
+    text: affiliation.institution.display_name,
+    value: `${Math.min(...affiliation.years)}-${Math.max(...affiliation.years)}`,
+  }));
+
+  const topics = authorData.topics.map((topic) => ({
+    type: '',
+    text: topic.display_name,
+    value: `${topic.count} Artigos`,
+  }));
 
   const metrics = [
-    { icon: ic_hindex, title: 'H-index', description: '', value: '26', type: 'value' },
-    { icon: ic_hindex, title: 'i10-index', description: '', value: '35', type: 'value' },
-    { icon: ic_hindex, title: 'Média de citações últimos 2 anos', description: '', value: '5.1', type: 'value' }
+    { icon: ic_hindex, title: 'H-index', description: '', value: authorData.summary_stats.h_index, type: 'value' },
+    { icon: ic_hindex, title: 'i10-index', description: '', value: authorData.summary_stats.i10_index, type: 'value' },
+    { icon: ic_hindex, title: 'Média de citações últimos 2 anos', description: '', value: authorData.summary_stats["2yr_mean_citedness"].toFixed(1), type: 'value' }
   ];
 
-  const articles = [
-    {
-      icon: ic_article,
-      title: 'Semi-Supervised Classification with Graph Convolutional Networks',
-      citations: '12.575',
-      year: '2016'
-    },
-    {
-      icon: ic_article,
-      title: 'Modeling Relational Data with Graph Convolutional Networks',
-      citations: '3.412',
-      year: '2018'
-    },
-    {
-      icon: ic_article,
-      title: 'Variational Graph Auto-Encoders',
-      citations: '1.162',
-      year: '2016'
-    }
-  ];
+  const articlesChartData = {
+    labels: authorData.counts_by_year.map(item => item.year),
+    dataPoints: authorData.counts_by_year.map(item => item.works_count)
+  };
+
+  const citationsChartData = {
+    labels: authorData.counts_by_year.map(item => item.year),
+    dataPoints: authorData.counts_by_year.map(item => item.cited_by_count)
+  };
 
   return (
     <div>
       <Header />
       <CompleteSearch
-        onArticlesSearch={handleArticlesSearch}
-        clearLabel={() => { }}
+        onArticlesSearch={() => {}}
+        clearLabel={() => {}}
         showSwitch={false}
       />
       <AuthorName>{authorName}</AuthorName>
@@ -147,51 +190,65 @@ const AuthorPage = () => {
         <ChartWrapper>
           <ChartCard
             title="Artigos Publicados"
-            subtitle="74 artigos"
-            labels={["2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"]}
-            dataPoints={[2, 6, 4, 3, 9, 5, 6, 3]}
+            subtitle={`${formatNumber(authorData.works_count)} artigos`}
+            labels={articlesChartData.labels}
+            dataPoints={articlesChartData.dataPoints}
           />
         </ChartWrapper>
         <ChartWrapper>
           <ChartCard
             title="Citações"
-            subtitle="25.928 citações"
-            labels={["2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"]}
-            dataPoints={[300, 120, 200, 150, 275, 320, 260, 90]}
+            subtitle={`${formatNumber(authorData.cited_by_count)} citações`}
+            labels={citationsChartData.labels}
+            dataPoints={citationsChartData.dataPoints}
           />
         </ChartWrapper>
       </ChartsContainer>
       <ContainerInfoListCard>
         <InfoListCard
           title="Instituições"
-          subtitle="8 instituições"
+          subtitle={`${institutions.length} instituições`}
           data={institutions}
         />
         <InfoListCard
           title="Tópicos Abordados"
-          subtitle="4 tópicos"
+          subtitle={`${topics.length} tópicos`}
           data={topics}
         />
       </ContainerInfoListCard>
       <ContainerMetricsOrCollaboratorsCard>
         <MetricsOrCollaboratorsCard
-          title="Colaboradores do Autor"
-          subtitle="18 colaboradores"
-          data={collaborators} />
+          title="Principais Colaboradores"
+          subtitle={`${collaborators.length} colaboradores`}
+          data={collaborators.map(collaborator => ({
+            icon: ic_collaborator,
+            title: collaborator.name,
+            description: collaborator.institution,
+            collaborations: collaborator.count, // Número de colaborações
+            value: 'Acessar Dados',
+            type: 'button',
+            id: collaborator.id // Inclui o ID aqui para o redirecionamento
+          }))}
+        />
         <MetricsOrCollaboratorsCard
           title="Métricas de Impacto do Autor"
           subtitle="3 métricas"
-          data={metrics} />
+          data={metrics}
+        />
       </ContainerMetricsOrCollaboratorsCard>
       <ContainerRelevantArticlesList>
         <RelevantArticlesList
           title="Artigos Relevantes"
-          subtitle="23 artigos"
-          articles={articles}
+          subtitle="Top 5 mais citados"
+          articles={relevantArticles}
         />
       </ContainerRelevantArticlesList>
     </div>
   );
+};
+
+const formatNumber = (num) => {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
 
 export default AuthorPage;

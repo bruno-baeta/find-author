@@ -2,49 +2,50 @@ import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const RelevantArticlesList = ({ title, subtitle, articles }) => {
-  const citationRefs = useRef([]);
-  const [maxLabelWidth, setMaxLabelWidth] = useState(0);
+    const citationRefs = useRef([]);
+    const [maxLabelWidth, setMaxLabelWidth] = useState(0);
 
-  useEffect(() => {
-    if (citationRefs.current.length > 0) {
-      const widths = citationRefs.current.map(ref => ref.offsetWidth);
-      const maxWidth = Math.max(...widths);
-      setMaxLabelWidth(maxWidth); 
-    }
-  }, [articles]);
+    useEffect(() => {
+        if (citationRefs.current.length > 0) {
+            const widths = citationRefs.current.map(ref => ref.offsetWidth);
+            const maxWidth = Math.max(...widths);
+            setMaxLabelWidth(maxWidth);
+        }
+    }, [articles]);
 
-  return (
-    <CardContainer>
-      <Title>{title}</Title>
-      <Subtitle>{subtitle}</Subtitle>
-      <ListContainer>
-        {articles.map((article, index) => (
-          <ItemCard key={index}>
-            <IconWrapper>
-              <img src={article.icon} alt="icon" width="30" height="30" />
-            </IconWrapper>
-            <ArticleText>
-              <ArticleTitle>{article.title}</ArticleTitle>
-            </ArticleText>
-            <InfoWrapper>
-              <Citations
-                ref={(el) => (citationRefs.current[index * 2] = el)}
-                width={maxLabelWidth}
-              >
-                {article.citations} Citações
-              </Citations>
-              <Year
-                ref={(el) => (citationRefs.current[index * 2 + 1] = el)} 
-                width={maxLabelWidth}
-              >
-                {article.year}
-              </Year>
-            </InfoWrapper>
-          </ItemCard>
-        ))}
-      </ListContainer>
-    </CardContainer>
-  );
+    return (
+        <CardContainer>
+            <ListContainer>
+                <Title>{title}</Title>
+                <Subtitle>{subtitle}</Subtitle>
+
+                {articles.map((article, index) => (
+                    <ItemCard key={index}>
+                        <IconWrapper>
+                            <img src={article.icon} alt="icon" width="30" height="30" />
+                        </IconWrapper>
+                        <ArticleText>
+                            <ArticleTitle>{article.title}</ArticleTitle>
+                        </ArticleText>
+                        <InfoWrapper>
+                            <Citations
+                                ref={(el) => (citationRefs.current[index * 2] = el)}
+                                width={maxLabelWidth}
+                            >
+                                {article.citations} Citações
+                            </Citations>
+                            <Year
+                                ref={(el) => (citationRefs.current[index * 2 + 1] = el)}
+                                width={maxLabelWidth}
+                            >
+                                {article.year}
+                            </Year>
+                        </InfoWrapper>
+                    </ItemCard>
+                ))}
+            </ListContainer>
+        </CardContainer>
+    );
 };
 
 const CardContainer = styled.div`
@@ -53,7 +54,9 @@ const CardContainer = styled.div`
   border-radius: 24px;
   flex: 1;
   display: flex;
+  max-height: 400px;
   flex-direction: column;
+  overflow-y: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 22px;
 `;
@@ -78,7 +81,6 @@ const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-height: 400px;
   overflow-y: auto;
 
   &::-webkit-scrollbar {

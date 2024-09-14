@@ -1,7 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const MetricsOrCollaboratorsCard = ({ title, subtitle, data }) => {
+  const navigate = useNavigate();
+
+  const handleButtonClick = (collaboratorId) => {
+    navigate(`/author/${collaboratorId}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // Rola para o topo
+  };
+
   return (
     <CardContainer>
       <Title>{title}</Title>
@@ -21,7 +29,9 @@ const MetricsOrCollaboratorsCard = ({ title, subtitle, data }) => {
             </ItemText>
             <BottomContent>
               {item.type === 'button' ? (
-                <ActionButton>{item.value}</ActionButton>
+                <ActionButton onClick={() => handleButtonClick(item.id)}>
+                  {item.value}
+                </ActionButton>
               ) : (
                 <ItemValue>{item.value}</ItemValue>
               )}
@@ -33,13 +43,15 @@ const MetricsOrCollaboratorsCard = ({ title, subtitle, data }) => {
   );
 };
 
+// Seus estilos já existentes
+
 const CardContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.card};
   padding: 20px;
   border-radius: 24px;
   flex: 1;
   display: flex;
-  max-height: 382px;
+  max-height: 400px;
   flex-direction: column;
   overflow-y: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -86,9 +98,8 @@ const Subtitle = styled.h3`
 
 const ListContainer = styled.div`
   display: flex;
-  gap: 22px;
+  gap: 28px;
   flex-wrap: wrap;
-  justify-content: space-between;
 `;
 
 const ItemCard = styled.div`

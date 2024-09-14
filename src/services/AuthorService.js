@@ -9,3 +9,8 @@ export const fetchAuthors = async (searchTerm) => {
   });
   return response.data.results || [];
 };
+
+export const fetchAuthor = async (authorId) => {
+  const response = await Api.get(`/authors/${authorId}`);
+  return response.data;
+};
