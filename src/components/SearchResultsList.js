@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import SearchResultItem from "./SearchResultItem";
 
-const SearchResultsList = ({ results }) => {
+const SearchResultsList = ({ results, onItemClick }) => {
   const [hasScrollbar, setHasScrollbar] = useState(false);
   const containerRef = useRef(null);
 
@@ -33,6 +33,7 @@ const SearchResultsList = ({ results }) => {
           publications={result.works_count}
           citations={result.cited_by_count}
           authorId={result.id.match(/\/([^\/]+)$/)[1]}
+          onItemClick={onItemClick}
         />
       ))}
     </ResultsContainer>

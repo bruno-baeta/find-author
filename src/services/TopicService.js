@@ -11,3 +11,18 @@ export const fetchHomeWorks = async (searchTerm) => {
   });
   return response.data.results || [];
 };
+
+export const fetchRandomTopics = async () => {
+  const response = await Api.get('/concepts', {
+    params: {
+      select: 'id,display_name',
+      per_page: 100, 
+    },
+  });
+
+  const topics = response.data.results || [];
+
+  const shuffledTopics = topics.sort(() => 0.5 - Math.random());
+
+  return shuffledTopics.slice(0, 12);
+};

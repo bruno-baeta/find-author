@@ -13,8 +13,6 @@ import CompleteSearch from '../components/CompleteSearch';
 import { fetchAuthor } from '../services/AuthorService';
 import { fetchAuthorWorks } from '../services/WorksService';
 
-// Seus estilos já existentes
-
 const ChartsContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -120,7 +118,7 @@ const AuthorPage = () => {
         const collaboratorId = authorship.author.id.replace('https://openalex.org/', '');
         const collaboratorName = authorship.author.display_name;
 
-        if (collaboratorId !== authorId) { // Evita o próprio autor
+        if (collaboratorId !== authorId) {
           const institution = authorship.institutions?.[0]?.display_name || 'Instituição não encontrada';
 
           collaboratorsMap.set(collaboratorId, {
@@ -181,8 +179,8 @@ const AuthorPage = () => {
     <div>
       <Header />
       <CompleteSearch
-        onArticlesSearch={() => {}}
-        clearLabel={() => {}}
+        onArticlesSearch={() => { }}
+        clearLabel={() => { }}
         showSwitch={false}
       />
       <AuthorName>{authorName}</AuthorName>
@@ -224,10 +222,10 @@ const AuthorPage = () => {
             icon: ic_collaborator,
             title: collaborator.name,
             description: collaborator.institution,
-            collaborations: collaborator.count, // Número de colaborações
+            collaborations: collaborator.count,
             value: 'Acessar Dados',
             type: 'button',
-            id: collaborator.id // Inclui o ID aqui para o redirecionamento
+            id: collaborator.id
           }))}
         />
         <MetricsOrCollaboratorsCard

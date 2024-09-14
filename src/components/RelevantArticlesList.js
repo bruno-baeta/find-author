@@ -32,7 +32,7 @@ const RelevantArticlesList = ({ title, subtitle, articles }) => {
                                 ref={(el) => (citationRefs.current[index * 2] = el)}
                                 width={maxLabelWidth}
                             >
-                                {article.citations} Citações
+                                {formatNumber(article.citations)} Citações
                             </Citations>
                             <Year
                                 ref={(el) => (citationRefs.current[index * 2 + 1] = el)}
@@ -173,5 +173,9 @@ const Year = styled.div`
   text-align: center;
   min-width: ${({ width }) => width}px; 
 `;
+
+const formatNumber = (num) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+};
 
 export default RelevantArticlesList;

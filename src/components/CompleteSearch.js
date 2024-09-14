@@ -40,6 +40,12 @@ const CompleteSearch = ({ onArticlesSearch, clearLabel, showSwitch = true }) => 
     }
   };
 
+  // Função para esconder a lista e o overlay
+  const handleItemClick = () => {
+    setResults([]); // Limpar os resultados
+    setShowResults(false); // Esconder a lista de resultados
+  };
+
   return (
     <>
       {showResults && !isArticleSearch && <Overlay />}
@@ -57,7 +63,7 @@ const CompleteSearch = ({ onArticlesSearch, clearLabel, showSwitch = true }) => 
 
         {!isArticleSearch && showResults && results.length > 0 && (
           <ResultsWrapper>
-            <SearchResultsList results={results} />
+            <SearchResultsList results={results} onItemClick={handleItemClick} />
           </ResultsWrapper>
         )}
       </SearchContainer>

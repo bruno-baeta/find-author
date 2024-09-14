@@ -3,10 +3,12 @@ import styled from "styled-components";
 import ArticleItem from "./ArticleItem";
 
 const ArticleList = ({ label, articles }) => {
+  const articleCount = articles.length;
+
   return (
     <Container>
       <Header>
-        <h2>Top 10 Artigos Relevantes</h2>
+        <h2>Top {articleCount} Artigos Relevantes</h2>
         <h1>{label}</h1>
       </Header>
       <ArticleContainer>
@@ -14,15 +16,15 @@ const ArticleList = ({ label, articles }) => {
           const articleData = mapArticleData(article);
           return (
             <ArticleItem 
-            key={index}
-            title={articleData.title}
-            author={articleData.author.name}
-            institution={articleData.institution}
-            year={articleData.year}
-            citedByCount={articleData.citedByCount}
-            concepts={articleData.concepts}
-            doi={articleData.doi}
-            authorId={articleData.author.id}
+              key={index}
+              title={articleData.title}
+              author={articleData.author.name}
+              institution={articleData.institution}
+              year={articleData.year}
+              citedByCount={articleData.citedByCount}
+              concepts={articleData.concepts}
+              doi={articleData.doi}
+              authorId={articleData.author.id}
             />
           );
         })}
@@ -32,28 +34,36 @@ const ArticleList = ({ label, articles }) => {
 };
 
 const mapArticleData = (article) => {
-  const primaryAuthor = article.authorships.find(auth => auth.author_position === 'first');
-  const authorName = primaryAuthor ? primaryAuthor.author.display_name : 'Autor desconhecido';
-  const authorLink = primaryAuthor ? primaryAuthor.author.id : '#';
+  if (!article || article.length === 0) {
+    return <p>Nenhum artigo encontrado</p>;
+  }
+  
+  const primaryAuthor = article.authorships && article.authorships.length > 0 
+    ? article.authorships.find(auth => auth.author_position === 'first') || article.authorships[0]
+    : null;
 
-  const institution = primaryAuthor && primaryAuthor.institutions.length > 0
+  const authorName = primaryAuthor ? primaryAuthor.author.display_name : 'Autor desconhecido';
+  const authorLink = primaryAuthor && primaryAuthor.author.id 
+    ? primaryAuthor.author.id.match(/\/([^\/]+)$/)[1] 
+    : '#';
+
+  const institution = primaryAuthor && primaryAuthor.institutions && primaryAuthor.institutions.length > 0
     ? primaryAuthor.institutions[0].display_name
     : 'Instituição desconhecida';
 
   return {
-    title: article.display_name || article.title,
+    title: article.display_name || article.title || "Título desconhecido",
     author: {
       name: authorName,
-      id: authorLink.match(/\/([^\/]+)$/)[1],
+      id: authorLink,
     },
     institution,
-    year: article.publication_year,
-    citedByCount: article.cited_by_count,
-    concepts: article.concepts,
+    year: article.publication_year || "Ano desconhecido",
+    citedByCount: article.cited_by_count || 0,
+    concepts: article.concepts || [],
     doi: article.doi || "#",
   };
 };
-
 
 const Container = styled.div`
   padding: 40px;
@@ -123,6 +133,5 @@ const ArticleContainer = styled.div`
     gap: 6px;
   }
 `;
-
 
 export default ArticleList;

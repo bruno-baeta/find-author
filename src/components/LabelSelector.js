@@ -1,47 +1,46 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { fetchRandomTopics } from '../services/TopicService';
 
-const LabelSelector = ({ onSelect, selectedLabel, clearSelection }) => {
-  const labels = [
-    "Deep Learning", "Quantum Computing", "Neurobiologia", "Microbiologia", "Data Science",
-    "Biotecnologia", "Antropologia Cultural", "Econometria", "Comunicação Digital",
-    "Educação Inclusiva", "Filosofia Política", "Química"
-  ];
-
-  const [currentLabel, setCurrentLabel] = useState(selectedLabel || labels[0]);
-
-  const getVisibleLabels = () => {
-    if (window.innerWidth < 768) {
-      return labels.slice(0, 5);
-    }
-    return labels;
-  };
-
-  const [visibleLabels, setVisibleLabels] = useState(getVisibleLabels());
+const LabelSelector = ({ onSelect, selectedLabel }) => {
+  const [labels, setLabels] = useState([]);
+  const [currentLabel, setCurrentLabel] = useState('');
+  const [hasFetched, setHasFetched] = useState(false);
 
   useEffect(() => {
-    window.addEventListener("resize", () => setVisibleLabels(getVisibleLabels()));
-    return () => window.removeEventListener("resize", () => setVisibleLabels(getVisibleLabels()));
-  }, []);
+    const loadRandomTopics = async () => {
+      if (hasFetched) return;
+
+      const topics = await fetchRandomTopics();
+      if (topics.length > 0) {
+        setLabels(topics);
+        setCurrentLabel(topics[0].display_name);
+        onSelect(topics[0].display_name);
+      }
+      setHasFetched(true);
+    };
+
+    loadRandomTopics(); 
+  }, [onSelect, hasFetched]);
 
   useEffect(() => {
-    if (clearSelection) {
-      setCurrentLabel(null);
+    if (selectedLabel) {
+      setCurrentLabel(selectedLabel);
     }
-  }, [clearSelection]);
+  }, [selectedLabel]);
 
   return (
     <LabelContainer>
-      {visibleLabels.map((label) => (
+      {labels.map((label) => (
         <Label
-          key={label}
-          isSelected={label === currentLabel}
+          key={label.id}
+          isSelected={label.display_name === currentLabel}
           onClick={() => {
-            onSelect(label);
-            setCurrentLabel(label);
+            onSelect(label.display_name);
+            setCurrentLabel(label.display_name);
           }}
         >
-          {label}
+          {label.display_name}
         </Label>
       ))}
     </LabelContainer>
@@ -75,19 +74,12 @@ const Label = styled.div`
   font-size: 14px;
   font-weight: bold;
   color: #ffffff;
-  background: ${(props) =>
-    props.isSelected ? props.theme.colors.gradient : "#252836"};
+  background: ${({ isSelected, theme }) => isSelected ? theme.colors.gradient : "#252836"};
   cursor: pointer;
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: ${(props) =>
-      props.isSelected ? "#6C5ECF" : "#3b3f54"};
-  }
-
-  &:hover {
-    background-color: ${(props) =>
-      props.isSelected ? "#6C5ECF" : "#3b3f54"};
+    background-color: ${({ isSelected }) => isSelected ? "#6C5ECF" : "#3b3f54"};
   }
 
   @media (max-width: 768px) {

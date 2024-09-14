@@ -7,7 +7,7 @@ const MetricsOrCollaboratorsCard = ({ title, subtitle, data }) => {
 
   const handleButtonClick = (collaboratorId) => {
     navigate(`/author/${collaboratorId}`);
-    window.scrollTo({ top: 0, behavior: 'smooth' }); // Rola para o topo
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -42,8 +42,6 @@ const MetricsOrCollaboratorsCard = ({ title, subtitle, data }) => {
     </CardContainer>
   );
 };
-
-// Seus estilos já existentes
 
 const CardContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.card};

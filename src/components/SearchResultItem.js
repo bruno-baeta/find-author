@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import profileIcon from "../assets/ic_search_list_icon.svg";
 
-const SearchResultItem = ({ name, publications, citations, onPublicationClick, onCitationClick, authorId }) => {
+const SearchResultItem = ({ name, publications, citations, authorId, onItemClick }) => {
   const navigate = useNavigate();
 
   const handleItemClick = () => {
-    navigate(`/author/${authorId}`); 
+    onItemClick();
+    navigate(`/author/${authorId}`);
   };
 
   return (
@@ -16,12 +17,8 @@ const SearchResultItem = ({ name, publications, citations, onPublicationClick, o
       <Details>
         <Name>{name}</Name>
         <Stats>
-          <StatButton onClick={(e) => { e.stopPropagation(); onPublicationClick(); }}>
-            {publications} Publicações
-          </StatButton>
-          <StatButton onClick={(e) => { e.stopPropagation(); onCitationClick(); }}>
-            {citations} Citações
-          </StatButton>
+          <Stat>{publications} Publicações</Stat>
+          <Stat>{citations} Citações</Stat>
         </Stats>
       </Details>
     </ItemContainer>
@@ -85,19 +82,16 @@ const Stats = styled.div`
   }
 `;
 
-const StatButton = styled.button`
+const Stat = styled.div`
   background: linear-gradient(90deg, #6C5ECF 0%, #6B8AEB 100%);
   color: #fff;
   padding: 5px 15px;
-  border: none;
   border-radius: 24px;
   font-family: "Poppins", sans-serif;
   font-size: 12px;
   font-weight: bold;
-  cursor: pointer;
   min-width: 130px;
   text-align: center;
-  transition: background-color 0.3s ease, color 0.3s ease;
 `;
 
 export default SearchResultItem;

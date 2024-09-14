@@ -5,12 +5,16 @@ import CompleteSearch from "../components/CompleteSearch";
 import LabelSelector from "../components/LabelSelector";
 import ArticleList from "../components/ArticleList";
 import { fetchHomeWorks } from "../services/TopicService";
+import { useDebounce } from "../hook/UseDebounce";
 
 const HomePage = () => {
   const [label, setLabel] = useState("Deep Learning");
   const [results, setResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const [clearSelection, setClearSelection] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const debouncedSearchTerm = useDebounce(searchTerm, 300); 
 
   useEffect(() => {
     const loadInitialArticles = async () => {
@@ -19,22 +23,29 @@ const HomePage = () => {
       setShowResults(data.length > 0);
     };
     loadInitialArticles();
-  }, [label]);
+  }, []);
+  
+  useEffect(() => {
+    const searchArticles = async () => {
+      if (debouncedSearchTerm) {
+        const data = await fetchHomeWorks(label);
+        setResults(data);
+        setLabel(debouncedSearchTerm);
+        setShowResults(true);
+        setClearSelection(true);
+      }
+    };
+    searchArticles();
+  }, [debouncedSearchTerm]);
 
-  const handleLabel = async (newLabel) => {
-    setClearSelection(false);
-    const data = await fetchHomeWorks(newLabel);
-    setResults(data);
-    setLabel(newLabel);
-    setShowResults(data.length > 0);
+  const handleArticlesSearch = (searchTerm) => {
+    setSearchTerm(searchTerm);
   };
 
-  const handleArticlesSearch = async (searchTerm) => {
-    const data = await fetchHomeWorks(searchTerm);
-    setResults(data);
-    setLabel(searchTerm);
-    setShowResults(true);
-    setClearSelection(true);
+  const handleLabelSelect = async (newLabel) => {
+    setClearSelection(false);
+    setSearchTerm(newLabel); 
+    setLabel(newLabel);
   };
 
   return (
@@ -43,11 +54,13 @@ const HomePage = () => {
       <CompleteSearch
         onArticlesSearch={handleArticlesSearch}
         clearLabel={() => setClearSelection(true)}
-        showSwitch={true} />
+        showSwitch={true}
+      />
       <LabelSelector
-        onSelect={handleLabel}
+        onSelect={handleLabelSelect} 
         clearSelection={clearSelection}
-        selectedLabel={label} />
+        selectedLabel={label}
+      />
       {showResults && <ArticleList label={label} articles={results} />}
     </PageContainer>
   );
