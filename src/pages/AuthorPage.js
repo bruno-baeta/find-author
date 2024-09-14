@@ -5,8 +5,10 @@ import ChartCard from '../components/ChartCard';
 import styled from 'styled-components';
 import InfoListCard from '../components/InfoListCard';
 import ic_collaborator from '../assets/ic_collaborator.svg';
-import ic_hindex from '../assets/ic_hindex.svg'; 
+import ic_hindex from '../assets/ic_hindex.svg';
+import ic_article from '../assets/ic_article_icon.svg';
 import MetricsOrCollaboratorsCard from '../components/MetricsOrCollaboratorsCard';
+import RelevantArticlesList from '../components/RelevantArticlesList';
 
 const ChartsContainer = styled.div`
   display: flex;
@@ -38,6 +40,20 @@ const ContainerInfoListCard = styled.div`
 `;
 
 const ContainerMetricsOrCollaboratorsCard = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0px 40px; 
+  width: 100%;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 20px;
+  }
+`;
+
+const ContainerRelevantArticlesList = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 20px;
@@ -97,6 +113,27 @@ const AuthorPage = () => {
     { icon: ic_hindex, title: 'Média de citações últimos 2 anos', description: '', value: '5.1', type: 'value' }
   ];
 
+  const articles = [
+    {
+      icon: ic_article,
+      title: 'Semi-Supervised Classification with Graph Convolutional Networks',
+      citations: '12.575',
+      year: '2016'
+    },
+    {
+      icon: ic_article,
+      title: 'Modeling Relational Data with Graph Convolutional Networks',
+      citations: '3.412',
+      year: '2018'
+    },
+    {
+      icon: ic_article,
+      title: 'Variational Graph Auto-Encoders',
+      citations: '1.162',
+      year: '2016'
+    }
+  ];
+
   return (
     <div>
       <Header />
@@ -146,6 +183,13 @@ const AuthorPage = () => {
           subtitle="3 métricas"
           data={metrics} />
       </ContainerMetricsOrCollaboratorsCard>
+      <ContainerRelevantArticlesList>
+        <RelevantArticlesList
+          title="Artigos Relevantes"
+          subtitle="23 artigos"
+          articles={articles}
+        />
+      </ContainerRelevantArticlesList>
     </div>
   );
 };
