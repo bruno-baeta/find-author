@@ -146,12 +146,12 @@ const ItemCard = styled.div`
 
   @media (max-width: 768px) {
     padding: 10px 16px;
-    border-radius: 28px;
+    border-radius: 22px;
   }
 
   @media (max-width: 480px) {
     padding: 8px 12px;
-    border-radius: 28px;
+    border-radius: 22px;
   }
 `;
 
@@ -264,15 +264,13 @@ const Year = styled.div`
   @media (max-width: 768px) {
     padding: 6px 12px;
     font-size: 11px;
-    max-width: 100px;
-    min-width: 100px;
+    width: 120x;
   }
 
   @media (max-width: 480px) {
     padding: 4px 10px;
     font-size: 10px;
-    max-width: 100px;
-    min-width: 100px;
+    width: 120x;
   }
 `;
 
