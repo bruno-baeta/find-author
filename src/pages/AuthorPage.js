@@ -83,7 +83,7 @@ const AuthorName = styled.h1`
   padding: 0px 0px 30px 40px; 
   
   @media (max-width: 768px) {
-    font-size: 28px;
+    font-size: 24px;
     padding: 10px 20px;
   }
 `;
@@ -156,7 +156,7 @@ const AuthorPage = () => {
   const topics = authorData.topics.map((topic) => ({
     type: '',
     text: topic.display_name,
-    value: `${topic.count} Artigos`,
+    value: `${topic.count} \n Artigos`,
   }));
 
   const metrics = [

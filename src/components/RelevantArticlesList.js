@@ -59,6 +59,16 @@ const CardContainer = styled.div`
   overflow-y: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 22px;
+
+  @media (max-width: 768px) {
+    padding: 20px 15px 10px 15px;
+    max-height: 350px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 20px 15px 10px 15px;
+    max-height: 300px;
+  }
 `;
 
 const Title = styled.h2`
@@ -67,6 +77,16 @@ const Title = styled.h2`
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
   margin-bottom: 16px;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
 `;
 
 const Subtitle = styled.h3`
@@ -75,6 +95,16 @@ const Subtitle = styled.h3`
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
   margin-bottom: 24px;
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+    margin-bottom: 18px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 24px;
+    margin-bottom: 14px;
+  }
 `;
 
 const ListContainer = styled.div`
@@ -94,15 +124,13 @@ const ListContainer = styled.div`
     border-radius: 2em;
     background-color: ${({ theme }) => theme.colors.primary};
   }
-  
-  &::-webkit-scrollbar-button {
-    width: 0;
-    height: 0;
-    display: none;
+
+  @media (max-width: 768px) {
+    gap: 10px;
   }
 
-  &::-webkit-scrollbar-corner {
-    background-color: transparent;
+  @media (max-width: 480px) {
+    gap: 8px;
   }
 `;
 
@@ -115,6 +143,16 @@ const ItemCard = styled.div`
   justify-content: space-between;
   padding: 12px 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    padding: 10px 16px;
+    border-radius: 28px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 8px 12px;
+    border-radius: 28px;
+  }
 `;
 
 const IconWrapper = styled.div`
@@ -123,11 +161,33 @@ const IconWrapper = styled.div`
     width: 30px;
     height: 30px;
   }
+
+  @media (max-width: 768px) {
+    img {
+      width: 25px;
+      height: 25px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
 `;
 
 const ArticleText = styled.div`
   flex-grow: 1;
   padding: 0 16px;
+
+  @media (max-width: 768px) {
+    padding: 0 12px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 8px;
+  }
 `;
 
 const ArticleTitle = styled.h4`
@@ -140,12 +200,30 @@ const ArticleTitle = styled.h4`
   overflow-wrap: break-word; 
   word-wrap: break-word; 
   hyphens: auto; 
+
+  @media (max-width: 768px) {
+    font-size: 11px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 10px;
+  }
 `;
 
 const InfoWrapper = styled.div`
   display: flex;
   gap: 20px;
   align-items: center;
+
+  @media (max-width: 768px) {
+    gap: 16px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 12px;
+    flex-direction: column;
+    align-items: flex-start; 
+  }
 `;
 
 const Citations = styled.div`
@@ -159,6 +237,16 @@ const Citations = styled.div`
   color: ${({ theme }) => theme.colors.text}; 
   text-align: center;
   min-width: ${({ width }) => width}px; 
+
+  @media (max-width: 768px) {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 4px 10px;
+    font-size: 10px;
+  }
 `;
 
 const Year = styled.div`
@@ -168,10 +256,24 @@ const Year = styled.div`
   border-radius: 32px;
   font-size: 12px;
   font-family: 'Poppins', sans-serif;
-  font-weight: bold; /* Bold */
+  font-weight: bold; 
   color: ${({ theme }) => theme.colors.text};
   text-align: center;
-  min-width: ${({ width }) => width}px; 
+  min-width: ${({ width }) => width}px;
+
+  @media (max-width: 768px) {
+    padding: 6px 12px;
+    font-size: 11px;
+    max-width: 100px;
+    min-width: 100px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 4px 10px;
+    font-size: 10px;
+    max-width: 100px;
+    min-width: 100px;
+  }
 `;
 
 const formatNumber = (num) => {

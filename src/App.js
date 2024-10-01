@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
     outline: none;
 
     &::-webkit-scrollbar {
-      width: 12px;
+      width: 10px;
     }
       
     &::-webkit-scrollbar-thumb {

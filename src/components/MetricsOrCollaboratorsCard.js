@@ -12,32 +12,36 @@ const MetricsOrCollaboratorsCard = ({ title, subtitle, data }) => {
 
   return (
     <CardContainer>
-      <Title>{title}</Title>
-      <Subtitle>{subtitle}</Subtitle>
       <ListContainer>
-        {data.map((item, index) => (
-          <ItemCard key={index}>
-            <IconWrapper>
-              <img src={item.icon} alt={item.title} width="70" height="70" />
-            </IconWrapper>
-            <ItemText>
-              <CollaboratorName>{item.title}</CollaboratorName>
-              <CollaboratorInfo>{item.description}</CollaboratorInfo>
-              {item.collaborations && (
-                <CollaboratorInfo>{item.collaborations} Colaborações</CollaboratorInfo>
-              )}
-            </ItemText>
-            <BottomContent>
-              {item.type === 'button' ? (
-                <ActionButton onClick={() => handleButtonClick(item.id)}>
-                  {item.value}
-                </ActionButton>
-              ) : (
-                <ItemValue>{item.value}</ItemValue>
-              )}
-            </BottomContent>
-          </ItemCard>
-        ))}
+        <Header>
+          <Title>{title}</Title>
+          <Subtitle>{subtitle}</Subtitle>
+        </Header>
+        <ItemsWrapper>
+          {data.map((item, index) => (
+            <ItemCard key={index}>
+              <IconWrapper>
+                <img src={item.icon} alt={item.title} width="70" height="70" />
+              </IconWrapper>
+              <ItemText>
+                <CollaboratorName>{item.title}</CollaboratorName>
+                <CollaboratorInfo>{item.description}</CollaboratorInfo>
+                {item.collaborations && (
+                  <CollaboratorInfo>{item.collaborations} Colaborações</CollaboratorInfo>
+                )}
+              </ItemText>
+              <BottomContent>
+                {item.type === 'button' ? (
+                  <ActionButton onClick={() => handleButtonClick(item.id)}>
+                    {item.value}
+                  </ActionButton>
+                ) : (
+                  <ItemValue>{item.value}</ItemValue>
+                )}
+              </BottomContent>
+            </ItemCard>
+          ))}
+        </ItemsWrapper>
       </ListContainer>
     </CardContainer>
   );
@@ -49,33 +53,26 @@ const CardContainer = styled.div`
   border-radius: 24px;
   flex: 1;
   display: flex;
-  max-height: 400px;
+  max-height: 410px;
   flex-direction: column;
-  overflow-y: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 22px;
 
-  &::-webkit-scrollbar {
-    width: 25px;
-  }
-  
-  &::-webkit-scrollbar-thumb {
-    height: 0.6em;
-    border: 0.5em solid rgba(0, 0, 0, 0);
-    background-clip: padding-box;
-    border-radius: 2em;
-    background-color: ${({ theme }) => theme.colors.primary};
-  }
-  
-  &::-webkit-scrollbar-button {
-    width: 0;
-    height: 0;
-    display: none;
+  @media (max-width: 768px) { 
+    padding: 20px 15px 10px 15px;
+    max-height: 310px;
   }
 
-  &::-webkit-scrollbar-corner {
-    background-color: transparent;
+  @media (max-width: 480px) {
+    padding: 20px 15px 10px 15px;
+    max-height: 330px;
   }
+`;
+
+const Header = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
 `;
 
 const Title = styled.h2`
@@ -84,6 +81,16 @@ const Title = styled.h2`
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
   margin-bottom: 16px;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
 `;
 
 const Subtitle = styled.h3`
@@ -92,12 +99,31 @@ const Subtitle = styled.h3`
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
   margin-bottom: 24px;
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+    margin-bottom: 18px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 24px;
+    margin-bottom: 14px;
+  }
 `;
 
 const ListContainer = styled.div`
   display: flex;
-  gap: 28px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow-y: auto;
+
+  @media (max-width: 768px) {
+    gap: 20px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 15px;
+  }
 `;
 
 const ItemCard = styled.div`
@@ -106,7 +132,8 @@ const ItemCard = styled.div`
   border-radius: 32px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  margin-right: 1px;
   align-items: center;
   padding: 10px 8px;
   width: calc(33.33% - 20px);
@@ -127,6 +154,20 @@ const IconWrapper = styled.div`
   img {
     width: 70px;
     height: 70px;
+  }
+
+  @media (max-width: 768px) {
+    img {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    img {
+      width: 50px;
+      height: 50px;
+    }
   }
 `;
 
@@ -151,6 +192,14 @@ const CollaboratorName = styled.h4`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media (max-width: 768px) {
+    font-size: 13px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 12px;
+  }
 `;
 
 const CollaboratorInfo = styled.p`
@@ -166,6 +215,14 @@ const CollaboratorInfo = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   word-wrap: break-word;
+
+  @media (max-width: 768px) {
+    font-size: 11px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 10px;
+  }
 `;
 
 const BottomContent = styled.div`
@@ -186,6 +243,16 @@ const ActionButton = styled.button`
   font-weight: bold;
   cursor: pointer;
   margin-top: 10px;
+
+  @media (max-width: 768px) {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 4px 10px;
+    font-size: 10px;
+  }
 `;
 
 const ItemValue = styled.div`
@@ -196,6 +263,28 @@ const ItemValue = styled.div`
   font-size: 24px;
   font-weight: bold;
   margin-top: 10px;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+    padding: 6px 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 18px;
+    padding: 4px 10px;
+  }
+`;
+
+const ItemsWrapper = styled.div`
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 98%;
+
+  @media (max-width: 480px) {
+      gap: 16px;
+  }
 `;
 
 export default MetricsOrCollaboratorsCard;

@@ -16,13 +16,21 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 const ChartCardWrapper = styled.div`
   background-color: ${(props) => props.theme.colors.card};
   padding: 20px;
-  border-radius: 16px;
+  border-radius: 24px; 
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 100%; 
-  overflow: hidden; 
+  max-width: 100%;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    padding: 6px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 20px 15px 10px 15px;
+  }
 `;
 
 const ChartTitle = styled.h2`
@@ -31,6 +39,16 @@ const ChartTitle = styled.h2`
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
   margin-bottom: 16px;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
 `;
 
 const ChartSubtitle = styled.h1`
@@ -38,25 +56,47 @@ const ChartSubtitle = styled.h1`
   font-size: 32px;
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
-  margin-bottom: 24px; 
+  margin-bottom: 24px;
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+    margin-bottom: 18px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 24px;
+    margin-bottom: 14px;
+  }
 `;
 
 const ChartCanvas = styled.div`
   width: 100%;
-  height: auto; 
+  height: auto;
   display: flex;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
 
   canvas {
     width: 100%;
     height: auto;
-    max-height: 380px; 
+    max-height: 380px;
   }
 
   @media (max-width: 1600px) {
     canvas {
       max-height: 280px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    canvas {
+      max-height: 220px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    canvas {
+      max-height: 180px;
     }
   }
 `;
